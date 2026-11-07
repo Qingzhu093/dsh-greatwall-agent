@@ -1,0 +1,143 @@
+{
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "results": [
+    {
+      "id": "S1",
+      "title": "surgical_replace_block 用 read_text/write_text 归一化换行：整文件被重写（LF 文件在 Windows 变 CRLF）",
+      "confirmed": true,
+      "evidence": {
+        "result": true,
+        "message": "已原位微创替换代码块 'solve' (原第 1~2 行)",
+        "bytes_before_prefix": "b'def solve(inputs):\\r\\n    return sum(input'",
+        "bytes_after_untouched_segment_ends_with": "b' 2\\r\\n\\r\\n'",
+        "untouched_function_region_bytes_changed": true
+      }
+    },
+    {
+      "id": "S1b",
+      "title": "LF 输入文件经一次微创替换后整体变成 CRLF（Windows 平台相关，跨平台字节不一致）",
+      "confirmed": true,
+      "evidence": {
+        "result": true,
+        "message": "已原位微创替换代码块 'solve' (原第 1~2 行)",
+        "after_hex_prefix": "64656620736f6c76652878293a0d0a2020202072657475726e20330d0a0d0a646566206f74686572",
+        "contains_crlf": true
+      }
+    },
+    {
+      "id": "S2",
+      "title": "UTF-8 BOM 脚本可被 CPython 正常执行，却被 surgical_replace_block 判为语法错误（Windows 常见编码）",
+      "confirmed": true,
+      "evidence": {
+        "python_runs_bom_file": true,
+        "python_stderr": "",
+        "surgical_result": false,
+        "surgical_message": "原脚本存在语法错误: invalid non-printable character U+FEFF (<unknown>, line 1)"
+      }
+    },
+    {
+      "id": "S3",
+      "title": "非 UTF-8(GBK) 脚本：未捕获 UnicodeDecodeError 直接抛穿工具层",
+      "confirmed": true,
+      "evidence": {
+        "exception": "UnicodeDecodeError('utf-8', b'# \\xd6\\xd0\\xce\\xc4\\xd7\\xa2\\xca\\xcd\\ndef solve(x):\\n    return 1\\n', 2, 3, 'invalid continuation byte')"
+      }
+    },
+    {
+      "id": "S4",
+      "title": "新代码块只校验第一个 AST 节点名称，后续顶层语句（import/os.system）被原样插入",
+      "confirmed": true,
+      "evidence": {
+        "result": true,
+        "message": "已原位微创替换代码块 'solve' (原第 1~2 行)",
+        "file_after": "def solve(x):\n    return 2\n\nimport os\nos.system('echo injected')\n"
+      }
+    },
+    {
+      "id": "S5",
+      "title": "替换带装饰器的函数会静默丢掉装饰器（@functools.lru_cache），工具仍返回成功",
+      "confirmed": true,
+      "evidence": {
+        "result": true,
+        "message": "已原位微创替换代码块 'solve' (原第 3~5 行)",
+        "file_after": "import functools\n\ndef solve(x):\n    return 2\n"
+      }
+    },
+    {
+      "id": "J1",
+      "title": "SandboxPathJail 相对路径越界被拦截；NTFS Junction 越界也由 resolve() 兜底",
+      "confirmed": true,
+      "evidence": {
+        "relative_escape_denied": true,
+        "junction_created": true,
+        "junction_write_denied": true
+      }
+    },
+    {
+      "id": "J2",
+      "title": "跨血统笔记隔离按文件名前缀硬编码判断（同一血统放行、其他血统拦截）",
+      "confirmed": true,
+      "evidence": {
+        "foreign_note_denied": true,
+        "foreign_note_error": "跨血统隐私隔离拦截：节点血统 'LIN-MINE' 禁止读取其他血统笔记 'LIN-OTHER_node-9.md'",
+        "own_note_allowed": true,
+        "note": "validate_read 在引擎生产代码中没有任何调用点（仅 validate_write 用于 gw_surgical_replace）"
+      }
+    },
+    {
+      "id": "L1",
+      "title": "跨进程文件锁互斥：40 进程 × 40 次 read-modify-write 恰好得到 1600（无丢失更新）",
+      "confirmed": true,
+      "evidence": {
+        "expected": 160,
+        "actual": 160,
+        "nonzero_exits": [],
+        "n_procs": 40
+      }
+    },
+    {
+      "id": "L2",
+      "title": "同一进程内对同一锁文件再次加锁不会重入（会阻塞到超时）——任何嵌套调用同一锁都会超时失败",
+      "confirmed": true,
+      "evidence": {
+        "second_acquire": "TimeoutError after 0.42s: 等待跨进程文件锁超时 (0.4s): C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_runtime_001s2x2o\\test.lock",
+        "timeout_sec": 0.4,
+        "lock": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_runtime_001s2x2o\\test.lock"
+      }
+    },
+    {
+      "id": "P1",
+      "title": "超时后 Job Object 连坐强杀整棵进程树（孙进程不再写出标记文件），exit=124",
+      "confirmed": true,
+      "evidence": {
+        "is_timeout": true,
+        "exit_code": 124,
+        "elapsed_sec": 2.03,
+        "grandchild_marker_created": false,
+        "peak_memory_mb": 14.6,
+        "stderr_tail": ""
+      }
+    },
+    {
+      "id": "P2",
+      "title": "Job Object 进程内存上限生效：200MB 分配在 max_memory_mb=64 下失败（非零退出）",
+      "confirmed": true,
+      "evidence": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_runtime_001s2x2o\\sub_work\\hog.py\", line 2, in <module>\n    x = bytearray(200 * 1024 * 1024)\nMemoryError\n",
+        "peak_memory_mb": 9.89
+      }
+    },
+    {
+      "id": "P3",
+      "title": "子进程 stdout/stderr 全量捕获（PIPE），不会污染 MCP 服务端 stdout",
+      "confirmed": true,
+      "evidence": {
+        "exit_code": 0,
+        "stdout": "NOISE_ON_STDOUT",
+        "stderr": "NOISE_ON_STDERR"
+      }
+    }
+  ]
+}

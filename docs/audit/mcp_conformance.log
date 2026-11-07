@@ -1,0 +1,54 @@
+server   = D:\Documents\deepseek harness\长城Agent_框架设计\plugins\greatwall-agent\bin\gw_mcp_server.py
+python   = C:\Users\wangy\AppData\Local\Programs\Python\Python314\python.exe 3.14.7
+tmp_ws   = C:\Users\wangy\AppData\Local\Temp\gw_audit_ws_ya9x2gsn
+
+[PASS] initialize returns MCP result
+        evidence: {"latency_ms": 97.7, "response": {"jsonrpc": "2.0", "id": 1, "result": {"protocolVersion": "2024-11-05", "serverInfo": {"name": "greatwall-agent", "version": "4.2.0"}, "capabilities": {"tools": {}}}}}
+[PASS] notifications/initialized is silent
+        evidence: {"line": "<TIMEOUT>"}
+[PASS] unknown notification is silent (no -32601 spam)
+        evidence: {"line": "<TIMEOUT>"}
+[PASS] tools/list exposes exactly 9 expected tools
+        evidence: {"tools": ["gw_init_campaign", "gw_lock_distillation", "gw_allocate_slot", "gw_surgical_replace", "gw_evaluate_slot", "gw_submit_legacy", "gw_lineage_control", "gw_archive_query", "gw_compile_delivery"]}
+[PASS] every inputSchema is object with workspaceRoot
+        evidence: {"schema_ok": true, "required_ok": true}
+[PASS] tools/call happy path (archive get_l0_index)
+        evidence: {"isError": false, "payload_keys": ["status", "l0_index_markdown"], "l0_first_line": "# 🏆 全局验证排行榜 Top-5 (Leaderboard)\n*(尚无提交记录，等待零号强基线 s_0 或首个探索分支入榜)*\n\n---\n\n# 🛠️ 档案馆可"}
+[PASS] UTF-8 arguments round-trip (Chinese+emoji)
+        evidence: {"isError": false, "task_config_contains": true}
+[PASS] malformed JSON -> -32700 and server survives
+        evidence: {"error_frame": {"jsonrpc": "2.0", "id": null, "error": {"code": -32700, "message": "JSON Parse error"}}, "alive": true}
+[PASS] unknown method -> -32601
+        evidence: {"jsonrpc": "2.0", "id": 6, "error": {"code": -32601, "message": "Method not found: no/such/method"}}
+[PASS] string id echoed verbatim
+        evidence: {"id": "req-abc"}
+[PASS] missing required args -> JSON-RPC result with isError=true
+        evidence: {"isError": true, "snippet": "{\"jsonrpc\": \"2.0\", \"id\": 7, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"{\\n  \\\"status\\\": \\\"ERROR\\\",\\n  \\\"message\\\": \\\"'slotId'\\\",\\n  \\\"traceback\\\": \\\"Traceback (most recent call last):\\\\n  File \\\\\\\"D:\\\\\\\\Documents\\\\\\\\deepseek harness\\\\\\\\长城Agent_框架设计\\\\\\\\plugins\\\\\\\\greatwall-agent\\\\\\\\bin\\\\\\\\gw_mcp_server.py\\\\\\\", line 513, in main\\\\n    out = handle_tool_call(tool_name, tool_args)\\\\n  File \\\\\\\"D"}
+[PASS] unknown tool name -> isError=true
+        evidence: {"text": "{\n  \"status\": \"ERROR\",\n  \"message\": \"未知的 MCP 工具名称: gw_not_a_tool\",\n  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"D:\\\\Documents\\\\deepseek harness\\\\长城Agent_框架设计\\\\plugins\\\\greatwall-agent\\"}
+[FAIL] tool-level status=ERROR is reported as isError=true
+        evidence: {"isError": false, "text": "{\n  \"status\": \"ERROR\",\n  \"message\": \"找不到活跃槽位: slot_99_missing\"\n}"}
+[PASS] stdout contains ONLY JSON-RPC frames
+        evidence: {"frames": 11, "bad_lines": []}
+[PASS] stderr quiet during normal operation
+        evidence: {"stderr": []}
+[PASS] 缺省 workspaceRoot 时回退到服务端 cwd，并在那里创建完整运行工作区
+        evidence: {"server_cwd": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_servercwd_iwirxieq", "response_status": "OK", "isError": false, "created": {"vault": true, "secret": true, "shared_readonly": true, "worktrees": true}}
+[PASS] clean shutdown on stdin EOF (exit code 0)
+        evidence: {"exit_code": 0, "stderr_tail": []}
+[FAIL] survives frame: JSON array (JSON-RPC batch)
+        evidence: {"label": "JSON array (JSON-RPC batch)", "frame": "[{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}]\n", "response_raw": null, "alive_after_frame": false, "exit_code": 1, "stderr_tail": ["Traceback (most recent call last):\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 552, in <module>\r\n", "    main()\r\n", "    ~~~~^^\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 487, in main\r\n", "    req_id = request.get(\"id\")\r\n", "             ^^^^^^^^^^^\r\n", "AttributeError: 'list' object has no attribute 'get'\r\n"], "stderr_traceback_saved": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit\\crash_stderr_01_JSON_array__JSON_RPC_batch_.txt"}
+[FAIL] survives frame: JSON null
+        evidence: {"label": "JSON null", "frame": "null\n", "response_raw": null, "alive_after_frame": false, "exit_code": 1, "stderr_tail": ["Traceback (most recent call last):\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 552, in <module>\r\n", "    main()\r\n", "    ~~~~^^\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 487, in main\r\n", "    req_id = request.get(\"id\")\r\n", "             ^^^^^^^^^^^\r\n", "AttributeError: 'NoneType' object has no attribute 'get'\r\n"], "stderr_traceback_saved": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit\\crash_stderr_02_JSON_null.txt"}
+[FAIL] survives frame: JSON number
+        evidence: {"label": "JSON number", "frame": "123\n", "response_raw": null, "alive_after_frame": false, "exit_code": 1, "stderr_tail": ["Traceback (most recent call last):\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 552, in <module>\r\n", "    main()\r\n", "    ~~~~^^\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 487, in main\r\n", "    req_id = request.get(\"id\")\r\n", "             ^^^^^^^^^^^\r\n", "AttributeError: 'int' object has no attribute 'get'\r\n"], "stderr_traceback_saved": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit\\crash_stderr_03_JSON_number.txt"}
+[FAIL] survives frame: JSON string
+        evidence: {"label": "JSON string", "frame": "\"hello\"\n", "response_raw": null, "alive_after_frame": false, "exit_code": 1, "stderr_tail": ["Traceback (most recent call last):\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 552, in <module>\r\n", "    main()\r\n", "    ~~~~^^\r\n", "  File \"D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent\\bin\\gw_mcp_server.py\", line 487, in main\r\n", "    req_id = request.get(\"id\")\r\n", "             ^^^^^^^^^^^\r\n", "AttributeError: 'str' object has no attribute 'get'\r\n"], "stderr_traceback_saved": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit\\crash_stderr_04_JSON_string.txt"}
+[PASS] survives frame: params as array on tools/call
+        evidence: {"label": "params as array on tools/call", "frame": "{\"jsonrpc\":\"2.0\",\"id\":50,\"method\":\"tools/call\",\"params\":[]}\n", "response_raw": "{\"jsonrpc\": \"2.0\", \"id\": 50, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"{\\n  \\\"status\\\": \\\"ERROR\\\",\\n  \\\"message\\\": \\\"未知的 MCP 工具名称: \\\",\\n  \\\"traceback\\\": \\\"Traceback (most recent call last):\\\\n  File \\\\\\\"D:\\\\\\\\Documents\\\\\\\\deepseek harness\\\\\\\\长城Agent_框架设计\\\\\\\\plugins\\\\\\\\greatwall-agent\\\\\\\\bin\\\\\\\\gw_mcp_server.py\\\\\\\", line 513, in main\\\\n    out = handle_tool_call(tool_name, tool_args)\\\\n  File \\\\\\\"D:\\\\\\\\Documents\\\\\\\\deepseek harness\\\\\\\\长城Agent_框架设计\\\\\\\\plugins\\\\\\\\greatwall-agent\\\\\\\\bin\\\\\\\\gw_mcp_server.py\\\\\\\", line 458, in handle_tool_call\\\\n    raise ValueError(f\\\\\\\"未知的 MCP 工具名称: {name}\\\\\\\")\\\\nValueError: 未知的 MCP 工具名称: \\\\n\\\"\\n}\"}], \"isError\": true}}\r\n", "alive_after_frame": true, "post_frame_tools_count": 9, "exit_code": null, "stderr_tail": [], "stderr_traceback_saved": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit\\crash_stderr_05_params_as_array_on_tools_call.txt"}
+[PASS] survives frame: request without method
+        evidence: {"label": "request without method", "frame": "{\"jsonrpc\":\"2.0\",\"id\":51}\n", "response_raw": "{\"jsonrpc\": \"2.0\", \"id\": 51, \"error\": {\"code\": -32601, \"message\": \"Method not found: \"}}\r\n", "alive_after_frame": true, "post_frame_tools_count": 9, "exit_code": null, "stderr_tail": [], "stderr_traceback_saved": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit\\crash_stderr_06_request_without_method.txt"}
+[INFO] LSP Content-Length framing
+        evidence: {"label": "LSP Content-Length framing", "frame": "Content-Length: 55\r\n\r\n{\"jsonrpc\":\"2.0\",\"id\":60,\"method\":\"tools/list\"}", "response_raw": "{\"jsonrpc\": \"2.0\", \"id\": null, \"error\": {\"code\": -32700, \"message\": \"JSON Parse error\"}}\r\n", "alive_after_frame": false, "post_frame_error": "KeyError: 'result'", "exit_code": null, "stderr_tail": [], "stderr_traceback_saved": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit\\crash_stderr_07_LSP_Content_Length_framing.txt"}
+
+=== 19 passed / 5 failed -> mcp_conformance_result.json ===

@@ -1,0 +1,7 @@
+state_initialized = False
+allocate_status = OK
+slot_id = slot_01_node-001
+base_commit = GENESIS_S0
+island_files = ['scoped_brief.md']
+brief_exists = True
+workspace = C:\Users\wangy\AppData\Local\Temp\gw_audit_uninit_p0ljhn5e

@@ -1,0 +1,33 @@
+hook_gate = D:\Documents\deepseek harness\长城Agent_框架设计\plugins\greatwall-agent\bin\hook_gate.py
+python    = C:\Users\wangy\AppData\Local\Programs\Python\Python314\python.exe 3.14.7
+
+H01 intended=deny                             actual='deny'     exit=0 | read_file .kernel_vault（Antigravity 形状）
+H02 intended=deny                             actual='deny'     exit=0 | write_file shared_readonly（Antigravity 形状）
+H03 intended=deny                             actual='deny'     exit=0 | run_command 重定向写 shared_readonly
+H04 intended=deny                             actual='deny'     exit=0 | run_command ../slot_ 跨槽位
+H05 intended=deny                             actual='deny'     exit=0 | run_command 同时引用两个 slot_
+H06 intended=allow                            actual='allow'    exit=0 | run_command 只读 shared_readonly（应放行）
+H07 intended=deny                             actual='allow'    exit=0 | DSH read 工具读 .kernel_vault（file_path 形状）
+H08 intended=deny                             actual='allow'    exit=0 | DSH write 工具写 shared_readonly（file_path 形状）
+H09 intended=deny                             actual='allow'    exit=0 | DSH edit 工具改 .kernel_vault（file_path 形状）
+H10 intended=deny                             actual='allow'    exit=0 | DSH shell 工具重定向写 shared_readonly（command 形状）
+H11 intended=deny                             actual='allow'    exit=0 | 大写 .KERNEL_VAULT（Windows 路径大小写不敏感）
+H12 intended=deny                             actual='allow'    exit=0 | 大写 SHARED_READONLY + write_file
+H13 intended=deny                             actual='allow'    exit=0 | 大写 ../SLOT_ 跨槽位
+H14 intended=deny                             actual='allow'    exit=0 | Copy-Item 写入 shared_readonly（不在黑名单）
+H15 intended=deny                             actual='allow'    exit=0 | python -c 写 shared_readonly（无重定向符号）
+H16 intended=deny                             actual='allow'    exit=0 | New-Item 在 shared_readonly 建文件
+H17 intended=deny                             actual='allow'    exit=0 | 绝对路径读隔壁槽位（无 ../ 也无两个槽位）
+H18 intended=deny                             actual='allow'    exit=0 | 只写 slot_02_node-002（无 worktrees/ 前缀）
+H19 intended=deny                             actual='allow'    exit=0 | 环境变量拼接 .kernel_vault（字符串不含字面量）
+H20 intended=deny                             actual='allow'    exit=0 | 通配符 .kernel_* 读
+H21 intended=allow-or-deny(unspecified)       actual='allow'    exit=0 | 空 stdin
+H22 intended=allow-or-deny(unspecified)       actual='allow'    exit=0 | 非法 JSON
+H23 intended=allow-or-deny(unspecified)       actual='allow'    exit=0 | 顶层 JSON 数组
+H24 intended=allow-or-deny(unspecified)       actual='allow'    exit=0 | toolCall 缺失
+H25 intended=allow                            actual='allow'    exit=0 | read_file 普通文件（应放行）
+
+bypasses(14): ['H07', 'H08', 'H09', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'H19', 'H20']
+false-deny(0): []
+malformed fail-open: [{'id': 'H21', 'decision': 'allow', 'intended': 'allow-or-deny(unspecified)'}, {'id': 'H22', 'decision': 'allow', 'intended': 'allow-or-deny(unspecified)'}, {'id': 'H23', 'decision': 'allow', 'intended': 'allow-or-deny(unspecified)'}, {'id': 'H24', 'decision': 'allow', 'intended': 'allow-or-deny(unspecified)'}]
+-> hook_gate_result.json

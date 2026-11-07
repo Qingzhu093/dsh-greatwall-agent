@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="gwGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#dc2626" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+  </defs>
+  <!-- Outer Shield / Fortress Border with ~10% margin -->
+  <rect x="14" y="14" width="100" height="100" rx="22" fill="#0f172a" stroke="url(#gwGrad)" stroke-width="5"/>
+  <!-- Great Wall Battlements (Crenellations) -->
+  <path d="M26 52 V38 H38 V46 H48 V38 H60 V46 H68 V38 H80 V46 H90 V38 H102 V52 Z" fill="url(#gwGrad)"/>
+  <rect x="26" y="52" width="76" height="14" rx="2" fill="url(#gwGrad)"/>
+  <!-- Evolutionary DAG / Multi-Loop Nodes below Battlements -->
+  <line x1="40" y1="66" x2="40" y2="86" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <line x1="64" y1="66" x2="64" y2="94" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <line x1="88" y1="66" x2="88" y2="86" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <line x1="40" y1="86" x2="64" y2="94" stroke="#38bdf8" stroke-width="2.5"/>
+  <line x1="88" y1="86" x2="64" y2="94" stroke="#38bdf8" stroke-width="2.5"/>
+  <circle cx="40" cy="86" r="7" fill="url(#nodeGrad)" stroke="#e0f2fe" stroke-width="2"/>
+  <circle cx="88" cy="86" r="7" fill="url(#nodeGrad)" stroke="#e0f2fe" stroke-width="2"/>
+  <circle cx="64" cy="94" r="9" fill="#10b981" stroke="#ecfdf5" stroke-width="2.5"/>
+</svg>

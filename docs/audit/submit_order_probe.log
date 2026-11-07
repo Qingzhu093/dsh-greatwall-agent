@@ -1,0 +1,19 @@
+{
+  "workspace": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_order_iixqmcb0\\ws",
+  "receipt_before": {
+    "status": null,
+    "frozen": 279.0
+  },
+  "submit_status": "FORGED_RECEIPT_DETECTED",
+  "submit_message": "安全警报：metrics_receipt.json 的 HMAC-SHA256 签名验证失败，严禁手工伪造成绩单！",
+  "submit_errors": null,
+  "side_effects_after_forged_receipt": {
+    "primitive_copied_into_archive": true,
+    "primitive_registered_in_manifest": true,
+    "record_blacklist_written": true,
+    "island_still_present": true,
+    "state_slot_still_active": true
+  }
+}
+
+[CONFIRMED] H1 forged receipt rejected AFTER archive admission

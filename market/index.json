@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Great Wall Agent",
+    "zh": "长城 Agent"
+  },
+  "description": {
+    "en": "Market index for the Great Wall Agent V4.2 unattended AI-for-Science and algorithm-competition campaign harness.",
+    "zh": "长城 Agent V4.2 无人值守科研攻关框架的插件市场索引。"
+  },
+  "plugins": [
+    {
+      "name": "dsh-greatwall-agent",
+      "title": {
+        "en": "Great Wall Agent V4.2",
+        "zh": "长城 Agent V4.2"
+      },
+      "description": {
+        "en": "Unattended long-horizon AI-for-Science and algorithm-competition campaigns: Phase-0 opening distillation, git-free clean-room slots, MLE-STAR surgical code replacement, HMAC-sealed isolated evaluation, a zero-vector L0/L1/L2 archive, and anti-bluff final delivery.",
+        "zh": "长程无人值守 AI for Science 与算法竞赛攻关插件：内置 Phase 0 开局先蒸馏引擎、无 .git 清洁室沙箱、MLE-STAR 局部代码块微创替换、HMAC 防伪隔离评测、零向量 L0/L1/L2 档案馆与终局防吹牛五件套交付。"
+      },
+      "icon": "icons/dsh-greatwall-agent.svg",
+      "author": "Great Wall Agent Contributors",
+      "homepage": "https://github.com/Qingzhu093/dsh-greatwall-agent#readme",
+      "repository": {
+        "url": "https://github.com/Qingzhu093/dsh-greatwall-agent"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "greatwall",
+          "great-wall-agent",
+          "mcp",
+          "ai-for-science",
+          "algorithm-competition",
+          "autonomous-agent",
+          "clean-room-sandbox"
+        ]
+      },
+      "dist-tags": {
+        "latest": "4.2.0"
+      },
+      "versions": [
+        {
+          "version": "4.2.0",
+          "publishTimestamp": "__PUBLISH_TIMESTAMP__",
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.2-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    }
+  ]
+}

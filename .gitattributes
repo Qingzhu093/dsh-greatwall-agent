@@ -1,0 +1,12 @@
+# Line endings and the byte-identical core
+#
+# `greatwall-agent/` is shipped byte-identical to the original Antigravity plugin
+# and `core-manifest.sha256` hashes those exact bytes. With `core.autocrlf=true`
+# (the default on Windows) a clone would rewrite LF to CRLF and make
+# `node tools/verify-core.mjs` fail through no fault of the package, so Git must
+# never translate line endings for that tree.
+#
+# Everything else is ordinary text stored with LF.
+* text=auto eol=lf
+greatwall-agent/** -text
+core-manifest.sha256 -text

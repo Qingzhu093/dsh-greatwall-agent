@@ -1,0 +1,310 @@
+{
+  "plugin_root": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\greatwall-agent",
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "confirmed": [
+    {
+      "id": "A1",
+      "title": "query_l2_item 路径穿越（相对 ../../../../ 与绝对路径）读取隔离区外任意 .py",
+      "confirmed": true,
+      "evidence": {
+        "request_itemId_1": "../../../../outside_workspace_secret",
+        "response_1": {
+          "type": "primitive",
+          "id": "../../../../outside_workspace_secret",
+          "path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\ws\\shared_readonly\\archive\\ledger\\primitives\\..\\..\\..\\..\\outside_workspace_secret.py"
+        },
+        "content_1_contains_secret": true,
+        "request_itemId_2": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\outside_tmp_secret",
+        "response_2": {
+          "type": "primitive",
+          "id": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\outside_tmp_secret",
+          "path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\outside_tmp_secret.py"
+        },
+        "content_2_contains_secret": true,
+        "tmp_root": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p"
+      }
+    },
+    {
+      "id": "D1",
+      "title": "HMAC 只签 (node_id, commit_hash, run_nonce, frozen, live)：triage_tier / case_scores / niche 可任意篡改不被发现",
+      "confirmed": true,
+      "evidence": {
+        "receipt_source": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_campaign_bmuy1z1d\\workspace\\.kernel_vault\\evaluator_suite\\receipts_history.jsonl",
+        "receipt_node": "NODE-001",
+        "original_verifies": true,
+        "tampered_still_verifies": true,
+        "tampered_fields": [
+          "triage_tier",
+          "case_scores",
+          "niche_hard_cases_score",
+          "isomorphic_perturbation_gap"
+        ],
+        "original_triage": "PARETO_PROMOTE",
+        "tampered_triage": "PARETO_PROMOTE"
+      }
+    },
+    {
+      "id": "B1",
+      "title": "被评测候选代码可写出孤岛并读取 .kernel_vault/hmac_secret.key（清洁室无 OS 级隔离）",
+      "confirmed": true,
+      "evidence": {
+        "status": "OK",
+        "anchor_s0_score": 279.0,
+        "pwned_file_created_outside_island": true,
+        "pwned_file_path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_escape_yoftmvnm\\ws\\pwned_outside_island.txt",
+        "pwned_content_matches_vault_secret": true,
+        "workspace": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_escape_yoftmvnm\\ws"
+      }
+    },
+    {
+      "id": "C1",
+      "title": "被测代码 evaluate() 自报分数获得合法 HMAC 签名收据（防吹牛防线可自证）",
+      "confirmed": true,
+      "evidence": {
+        "anchor_s0_score": 1000000000.0,
+        "triage_tier": "PARETO_PROMOTE",
+        "signature": "b39443ee1c36f3be35c88d1064ba88e1...",
+        "scores": {
+          "frozen_benchmark": 1000000000.0,
+          "live_challenge": 1000000000.0,
+          "isomorphic_perturbation_gap": 0.0,
+          "niche_hard_cases_score": 1000000000.0
+        },
+        "workspace": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_spoof_1995axuc\\ws"
+      }
+    },
+    {
+      "id": "C2",
+      "title": "被评测代码用 atexit 在指标行之后补打伪造 __GW_METRICS_JSON__ 覆盖真实得分",
+      "confirmed": true,
+      "evidence": {
+        "true_solve_return": 1.0,
+        "anchor_s0_score": 777.0,
+        "scores": {
+          "frozen_benchmark": 777.0,
+          "live_challenge": 777.0,
+          "isomorphic_perturbation_gap": 0.0,
+          "niche_hard_cases_score": 777.0
+        },
+        "workspace": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_spoof2_6cnnpeu8\\ws"
+      }
+    },
+    {
+      "id": "E1",
+      "title": "任意一个 exit=0 的空脚本即可认证 BarrierProof 并永久封禁整个方法族（FAM-02 无法再分配算力）",
+      "confirmed": true,
+      "evidence": {
+        "submit_status": "OK",
+        "admitted_barrier_proofs": [
+          "BARRIER-AUDIT-1"
+        ],
+        "proof_script": "print('nothing is proven here')",
+        "second_allocate_status": "BLOCKED_BY_BARRIER_PROOF",
+        "second_allocate_message": "正交方法族 'FAM-02' 已有经沙箱反例脚本证实的死路证明 (BarrierProof)，调度器拒绝在该死胡同继续分配算力！"
+      }
+    },
+    {
+      "id": "E2",
+      "title": "_verify_barrier_proof 不校验 counterexample_script 是否在孤岛内：可执行任意路径 .py 并认证",
+      "confirmed": true,
+      "evidence": {
+        "verify_result": true,
+        "message": "OK",
+        "script_rel": "../escaped_barrier.py",
+        "island": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_barrier_xkfd93ca\\island2",
+        "resolved_outside_island_marker": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_barrier_xkfd93ca\\BARRIER_ESCAPE_EXECUTED.txt",
+        "marker_created": true,
+        "proof_entry": {
+          "proof_id": "BARRIER-NODE-X",
+          "author_node": "NODE-X",
+          "blocked_family_id": "FAM-09",
+          "impossibility_statement": "x",
+          "counterexample_script": "../escaped_barrier.py",
+          "stdout_evidence": "ok",
+          "verified": true,
+          "timestamp": 1794057519.8995006
+        }
+      }
+    },
+    {
+      "id": "F1",
+      "title": "_audit_and_test_primitive 声称 AST 审计，实际直接 exec 节点代码且无任何禁止导入/调用拦截",
+      "confirmed": true,
+      "evidence": {
+        "admitted": true,
+        "message": "docstring",
+        "imports_used": [
+          "os",
+          "pathlib"
+        ],
+        "system_tool_import_forbidden": false,
+        "marker_created": true,
+        "marker": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_prim_a3fo_vgr\\worktrees\\slot_99_node-99\\PRIMITIVE_EXECUTED_UNSANDBOXED.txt"
+      }
+    },
+    {
+      "id": "G1",
+      "title": "compile_final_delivery 允许 executiveSummaryMd 为空串：终局报告正文可为空仍判定 OK",
+      "confirmed": true,
+      "evidence": {
+        "status": "OK",
+        "report_path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_empty_pkt9g4l1\\ws\\final_delivery\\01_executive_report.md",
+        "report_bytes": 371,
+        "report_body_after_header": "# 长城 Agent V4.2 终局技术报告 (`EMPTY`)\n\n\n\n---\n\n## 📊 独立沙箱实测性能演进总表（由内核从 HMAC 签名收据硬绑定生成）\n\n| 排名 | 节点编号 | 方法族 (Family) | 快照 Commit | Frozen 基准得分 | Live 挑战得分 | 运行耗时 (s) | 核心改进摘要 |\n| :---: | :--- | :--- | :--- | :"
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "A1",
+      "title": "query_l2_item 路径穿越（相对 ../../../../ 与绝对路径）读取隔离区外任意 .py",
+      "confirmed": true,
+      "evidence": {
+        "request_itemId_1": "../../../../outside_workspace_secret",
+        "response_1": {
+          "type": "primitive",
+          "id": "../../../../outside_workspace_secret",
+          "path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\ws\\shared_readonly\\archive\\ledger\\primitives\\..\\..\\..\\..\\outside_workspace_secret.py"
+        },
+        "content_1_contains_secret": true,
+        "request_itemId_2": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\outside_tmp_secret",
+        "response_2": {
+          "type": "primitive",
+          "id": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\outside_tmp_secret",
+          "path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p\\outside_tmp_secret.py"
+        },
+        "content_2_contains_secret": true,
+        "tmp_root": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_trav_a3ztpp3p"
+      }
+    },
+    {
+      "id": "D1",
+      "title": "HMAC 只签 (node_id, commit_hash, run_nonce, frozen, live)：triage_tier / case_scores / niche 可任意篡改不被发现",
+      "confirmed": true,
+      "evidence": {
+        "receipt_source": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_campaign_bmuy1z1d\\workspace\\.kernel_vault\\evaluator_suite\\receipts_history.jsonl",
+        "receipt_node": "NODE-001",
+        "original_verifies": true,
+        "tampered_still_verifies": true,
+        "tampered_fields": [
+          "triage_tier",
+          "case_scores",
+          "niche_hard_cases_score",
+          "isomorphic_perturbation_gap"
+        ],
+        "original_triage": "PARETO_PROMOTE",
+        "tampered_triage": "PARETO_PROMOTE"
+      }
+    },
+    {
+      "id": "B1",
+      "title": "被评测候选代码可写出孤岛并读取 .kernel_vault/hmac_secret.key（清洁室无 OS 级隔离）",
+      "confirmed": true,
+      "evidence": {
+        "status": "OK",
+        "anchor_s0_score": 279.0,
+        "pwned_file_created_outside_island": true,
+        "pwned_file_path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_escape_yoftmvnm\\ws\\pwned_outside_island.txt",
+        "pwned_content_matches_vault_secret": true,
+        "workspace": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_escape_yoftmvnm\\ws"
+      }
+    },
+    {
+      "id": "C1",
+      "title": "被测代码 evaluate() 自报分数获得合法 HMAC 签名收据（防吹牛防线可自证）",
+      "confirmed": true,
+      "evidence": {
+        "anchor_s0_score": 1000000000.0,
+        "triage_tier": "PARETO_PROMOTE",
+        "signature": "b39443ee1c36f3be35c88d1064ba88e1...",
+        "scores": {
+          "frozen_benchmark": 1000000000.0,
+          "live_challenge": 1000000000.0,
+          "isomorphic_perturbation_gap": 0.0,
+          "niche_hard_cases_score": 1000000000.0
+        },
+        "workspace": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_spoof_1995axuc\\ws"
+      }
+    },
+    {
+      "id": "C2",
+      "title": "被评测代码用 atexit 在指标行之后补打伪造 __GW_METRICS_JSON__ 覆盖真实得分",
+      "confirmed": true,
+      "evidence": {
+        "true_solve_return": 1.0,
+        "anchor_s0_score": 777.0,
+        "scores": {
+          "frozen_benchmark": 777.0,
+          "live_challenge": 777.0,
+          "isomorphic_perturbation_gap": 0.0,
+          "niche_hard_cases_score": 777.0
+        },
+        "workspace": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_spoof2_6cnnpeu8\\ws"
+      }
+    },
+    {
+      "id": "E1",
+      "title": "任意一个 exit=0 的空脚本即可认证 BarrierProof 并永久封禁整个方法族（FAM-02 无法再分配算力）",
+      "confirmed": true,
+      "evidence": {
+        "submit_status": "OK",
+        "admitted_barrier_proofs": [
+          "BARRIER-AUDIT-1"
+        ],
+        "proof_script": "print('nothing is proven here')",
+        "second_allocate_status": "BLOCKED_BY_BARRIER_PROOF",
+        "second_allocate_message": "正交方法族 'FAM-02' 已有经沙箱反例脚本证实的死路证明 (BarrierProof)，调度器拒绝在该死胡同继续分配算力！"
+      }
+    },
+    {
+      "id": "E2",
+      "title": "_verify_barrier_proof 不校验 counterexample_script 是否在孤岛内：可执行任意路径 .py 并认证",
+      "confirmed": true,
+      "evidence": {
+        "verify_result": true,
+        "message": "OK",
+        "script_rel": "../escaped_barrier.py",
+        "island": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_barrier_xkfd93ca\\island2",
+        "resolved_outside_island_marker": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_barrier_xkfd93ca\\BARRIER_ESCAPE_EXECUTED.txt",
+        "marker_created": true,
+        "proof_entry": {
+          "proof_id": "BARRIER-NODE-X",
+          "author_node": "NODE-X",
+          "blocked_family_id": "FAM-09",
+          "impossibility_statement": "x",
+          "counterexample_script": "../escaped_barrier.py",
+          "stdout_evidence": "ok",
+          "verified": true,
+          "timestamp": 1794057519.8995006
+        }
+      }
+    },
+    {
+      "id": "F1",
+      "title": "_audit_and_test_primitive 声称 AST 审计，实际直接 exec 节点代码且无任何禁止导入/调用拦截",
+      "confirmed": true,
+      "evidence": {
+        "admitted": true,
+        "message": "docstring",
+        "imports_used": [
+          "os",
+          "pathlib"
+        ],
+        "system_tool_import_forbidden": false,
+        "marker_created": true,
+        "marker": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_prim_a3fo_vgr\\worktrees\\slot_99_node-99\\PRIMITIVE_EXECUTED_UNSANDBOXED.txt"
+      }
+    },
+    {
+      "id": "G1",
+      "title": "compile_final_delivery 允许 executiveSummaryMd 为空串：终局报告正文可为空仍判定 OK",
+      "confirmed": true,
+      "evidence": {
+        "status": "OK",
+        "report_path": "C:\\Users\\wangy\\AppData\\Local\\Temp\\gw_audit_empty_pkt9g4l1\\ws\\final_delivery\\01_executive_report.md",
+        "report_bytes": 371,
+        "report_body_after_header": "# 长城 Agent V4.2 终局技术报告 (`EMPTY`)\n\n\n\n---\n\n## 📊 独立沙箱实测性能演进总表（由内核从 HMAC 签名收据硬绑定生成）\n\n| 排名 | 节点编号 | 方法族 (Family) | 快照 Commit | Frozen 基准得分 | Live 挑战得分 | 运行耗时 (s) | 核心改进摘要 |\n| :---: | :--- | :--- | :--- | :"
+      }
+    }
+  ]
+}

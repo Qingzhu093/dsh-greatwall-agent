@@ -1,0 +1,74 @@
+{
+  "name": "dsh-greatwall-agent",
+  "version": "4.2.0",
+  "description": "Great Wall Agent V4.2 for DeepSeek Harness: unattended long-horizon AI-for-Science and algorithm-competition campaigns — Phase-0 opening distillation, git-free clean-room slots, MLE-STAR surgical code replacement, HMAC-sealed isolated evaluation, a zero-vector L0/L1/L2 archive, and anti-bluff final delivery.",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "greatwall",
+    "great-wall-agent",
+    "mcp",
+    "ai-for-science",
+    "algorithm-competition",
+    "autonomous-agent",
+    "clean-room-sandbox"
+  ],
+  "author": "Great Wall Agent Contributors",
+  "license": "MIT",
+  "icon": "./icon.svg",
+  "type": "module",
+  "main": "./lib/index.js",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.2-rc.1 <0.3.0-0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qingzhu093/dsh-greatwall-agent.git"
+  },
+  "homepage": "https://github.com/Qingzhu093/dsh-greatwall-agent#readme",
+  "bugs": {
+    "url": "https://github.com/Qingzhu093/dsh-greatwall-agent/issues"
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib",
+    "locale",
+    "tools",
+    "cordis.patch.yml",
+    "icon.svg",
+    "core-manifest.sha256",
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "greatwall-agent"
+  ],
+  "scripts": {
+    "prepack": "node tools/clean-pycache.mjs",
+    "verify:core": "node tools/verify-core.mjs",
+    "manifest:core": "node tools/make-core-manifest.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.1.0",
+    "@deepseek-ai/dsh-mcp-client": ">=0.2.2-rc.1 <0.3.0-0",
+    "@deepseek-ai/schemastery": "~3.19.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  }
+}

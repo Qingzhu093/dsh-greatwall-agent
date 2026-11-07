@@ -1,0 +1,19 @@
+# dsh-greatwall-agent bundle layer.
+#
+# One Host row. Everything else is delivered BY the plugin during `apply`:
+#   * the Python MCP server (`greatwall-agent/bin/gw_mcp_server.py`) is bridged
+#     through the shipped `@deepseek-ai/dsh-mcp-client`, mounted by lib/index.js
+#     so the script path resolves from `import.meta.url` (no absolute paths in
+#     this file, and it works from any install location);
+#   * the `greatwall-campaign` skill is registered on `ctx.skills`;
+#   * the cleanroom gate (the PreToolUse port of `greatwall-agent/bin/hook_gate.py`)
+#     is registered as a `ctx.tools.guard`.
+#
+# No `config:` block here on purpose: Cordis validates the exported Schemastery
+# `Config` before `apply` and fills every omitted field from the schema defaults,
+# so defaults live in exactly one place (`lib/index.js`). A patch replaces the
+# whole `config` value rather than deep-merging it, so duplicating defaults here
+# would silently drop the other fields whenever a user overrides one.
+- insert:
+    - id: greatwall-agent
+      name: 'dsh-greatwall-agent'

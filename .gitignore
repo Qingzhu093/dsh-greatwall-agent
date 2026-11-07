@@ -1,0 +1,19 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+*.tgz
+
+# Python caches (the core under greatwall-agent/ is shipped verbatim; caches are not)
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Release scratch space
+.release/tmp/

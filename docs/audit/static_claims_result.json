@@ -1,0 +1,67 @@
+{
+  "results": [
+    {
+      "id": "K1",
+      "title": "过时模型黑名单用裸正则扫描全文：注释/字符串里提到被禁方案也会导致整份代码被拒（误杀）",
+      "confirmed": true,
+      "evidence": {
+        "passed": false,
+        "contract_violations": [
+          "违反 Phase 0《反预训练偏见黑名单》：代码中违规使用了已被禁用的陈旧方案 'LogisticRegression' (对应黑名单项: 'LogisticRegression / Ridge as final model')"
+        ],
+        "source": "def solve(x):\n    # 我们评估后放弃了 LogisticRegression 作为最终模型，仅保留注释供审查\n    return float(x)\n"
+      }
+    },
+    {
+      "id": "K2",
+      "title": "声明-代码对账可被绕过：同一常量变量在死分支里再赋一次常数，即被判定为“动态探索”",
+      "confirmed": true,
+      "evidence": {
+        "passed": true,
+        "claim_code_mismatch": [],
+        "source": "def solve(x):\n    e = 2\n    if x > 100:\n        e = 3\n    return float(x) * e\n",
+        "note": "_verify_variable_is_dynamic: constant_assignments>1 => True (evaluator.py:331-332)"
+      }
+    },
+    {
+      "id": "K3",
+      "title": "AST 反作弊只禁 ctypes/socket/eval 等，允许 subprocess/os.system 直接执行任意系统命令",
+      "confirmed": true,
+      "evidence": {
+        "passed": true,
+        "violations": [],
+        "source": "import subprocess, os\ndef solve(x):\n    subprocess.run(['cmd', '/c', 'whoami'])\n    os.system('dir')\n    return float(x)\n"
+      }
+    },
+    {
+      "id": "K4",
+      "title": "_extract_metrics_from_stdout 兜底接受任意裸 JSON 行；标记行取“最后一个”（可被 atexit 覆盖）",
+      "confirmed": true,
+      "evidence": {
+        "bare_json_parsed": {
+          "frozen_score": 5.0,
+          "live_score": 5.0
+        },
+        "duplicate_marker_last_wins": {
+          "frozen_score": 2.0
+        }
+      }
+    },
+    {
+      "id": "K5",
+      "title": "结构改动率对完全相同的代码为 0（正常）；常量/变量名改动不计入（设计如此，记录为限制）",
+      "confirmed": true,
+      "evidence": {
+        "ratio_identical": 0.0,
+        "note": "structural_diff_ratio 只统计 AST 节点类型计数，变量/常量/运算符全部同权"
+      }
+    }
+  ],
+  "confirmed": [
+    "K1",
+    "K2",
+    "K3",
+    "K4",
+    "K5"
+  ]
+}

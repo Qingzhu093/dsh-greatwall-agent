@@ -1,0 +1,14 @@
+{
+  "name": "greatwall-agent",
+  "displayName": "Great Wall Agent V4.2 (长城无人值守科研与竞赛系统)",
+  "version": "4.2.0",
+  "description": "长程无人值守 AI for Science 与算法竞赛攻关插件：内置 Phase 0 开局先蒸馏引擎、无 .git 清洁室沙箱、MLE-STAR 局部代码块微创替换、轻量级 L0/L1/L2 文件系统档案馆、四元组剥皮查新与跨进程 HMAC 防伪评测。",
+  "author": "Great Wall Agent Contributors",
+  "logo": "assets/logo.svg",
+  "repository": "https://github.com/Qingzhu093/greatwall-agent.git",
+  "suggestedPrompts": [
+    "启动长城 Agent Phase 0：对当前赛题执行开局消歧与 SOTA 知识蒸馏，铸造零号强基线 s_0",
+    "分配清洁室孤岛槽位，按 MLE-STAR 消融定靶对瓶颈代码块执行微创替换并运行跨进程评测",
+    "查询轻量级档案馆 L0 索引，执行跨分支结构拼图并编译 final_delivery 五件套终局交付信封"
+  ]
+}

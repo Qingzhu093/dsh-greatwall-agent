@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "D:\Documents\deepseek harness\长城Agent_框架设计\plugins\greatwall-agent\bin\gw_mcp_server.py", line 552, in <module>
+    main()
+    ~~~~^^
+  File "D:\Documents\deepseek harness\长城Agent_框架设计\plugins\greatwall-agent\bin\gw_mcp_server.py", line 487, in main
+    req_id = request.get("id")
+             ^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'

@@ -1,0 +1,38 @@
+{
+  "audit_dir": "D:\\Documents\\deepseek harness\\长城Agent_框架设计\\plugins\\dsh-greatwall-agent\\docs\\audit",
+  "created_by": "probe_mcp_conformance.py params-as-array frame -> server cwd fallback (gw_mcp_server.py:330)",
+  "dirs": [
+    {
+      "name": ".kernel_vault",
+      "exists": true,
+      "file_count": 1,
+      "sample": [
+        ".kernel_vault\\hmac_secret.key"
+      ]
+    },
+    {
+      "name": "shared_readonly",
+      "exists": true,
+      "file_count": 5,
+      "sample": [
+        "shared_readonly\\archive\\__init__.py",
+        "shared_readonly\\archive\\ledger\\__init__.py",
+        "shared_readonly\\archive\\ledger\\leaderboard.json",
+        "shared_readonly\\archive\\ledger\\primitives_manifest.json",
+        "shared_readonly\\archive\\ledger\\primitives\\__init__.py"
+      ]
+    },
+    {
+      "name": "worktrees",
+      "exists": true,
+      "file_count": 0,
+      "sample": []
+    },
+    {
+      "name": ".trash_graveyard",
+      "exists": true,
+      "file_count": 0,
+      "sample": []
+    }
+  ]
+}
